@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Dominion Specialist Medical and Diagnostics Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/contact.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-logo">
+            <img src="Pictures/logo.png" alt="Dominion Specialist Medical and Diagnostics Center Logo">
+        </div>
+        
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="About_Us.html">About Us</a></li>
+            <li><a href="#contact" class="active">Contact Us</a></li>
+            <li class="dropdown">
+                <span class="dropdown-toggle">Resources</span>
+                <ul class="dropdown-menu">
+                    <li><a href="Dominion-Class.html">Dominion Class</a></li>
+                    <li><a href="news.html">Dominion News</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <button class="header-button desktop-button" onclick="window.location.href='book_appointment.html'">Book an Appointment</button>
+        
+        <div class="menu-overlay"></div>
+    </header>
+
+    <section class="hero-section" id="hero">
+        <div class="hero-background">
+            <div class="hero-image active"></div>
+            <div class="hero-image"></div>
+        </div>
+        <h1>Contact Us</h1>
+        <p>We're Always Here For You</p>
+    </section>
+
+    <div class="container" id="contact">
+        <div class="contact-section">
+            <div class="contact-info">
+                <h2>Contact Information</h2>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="info-content">
+                        <strong>Visit Us</strong>
+                        <p>No. 4, Nova Road, Adebayo Area, Ado-Ekiti 360101, Ekiti State, Nigeria</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="info-content">
+                        <strong>Call Us</strong>
+                        <p>+234 806 328 9272; +234 813 060 6959</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="info-content">
+                        <strong>Email Us</strong>
+                        <p><a href="mailto:dominionspec2@gmail.com">dominionspec2@gmail.com; bisijacob@yahoo.co.uk</a></p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="info-content">
+                        <strong>Office Hours</strong>
+                        <p>Outpatient consultations: 8:00 am – 8:00pm daily</p>
+                        <p>Emergency services: 24 hours </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="map-container">
+            <div class="map-wrapper">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m24!1m8!1m3!1d3954.2524416425213!2d5.22960277618794!3d7.655983422236309!3m2!1i1024!2i768!4f13.1!4m13!3e2!4m5!1s0x1047e4ad854dbed5%3A0x5dba422ee96577f3!2sAfe%20Babalola%20Civic%20Center%2C%20M64H%2BHX6%2C%20Ado%20Ekiti%20360102%2C%20Ekiti!3m2!1d7.6565110999999995!2d5.2299744!4m5!1s0x1047e4ad854dbed5%3A0x5dba422ee96577f3!2sAfe%20Babalola%20Civic%20Center%2C%20M64H%2BHX6%2C%20Ado%20Ekiti%20360102%2C%20Ekiti!3m2!1d7.6565110999999995!2d5.2299744!5e0!3m2!1sen!2sng!4v1726440004808!5m2!1sen!2sng" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Dominion Specialist Medical and Diagnostics Center. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = [
+                './Pictures/Picture1 (1).jpeg',
+                './Pictures/Picture1 (2).jpeg',
+                './Pictures/Picture1 (3).jpeg',
+                './Pictures/Picture1 (4).jpeg',
+                './Pictures/Picture1 (5).jpeg',
+                './Pictures/Picture1 (6).jpeg',
+                './Pictures/Picture1 (7).jpeg',
+                './Pictures/Picture1 (8).jpeg'
+            ];
+
+            let currentIndex = 0;
+            const heroImages = document.querySelectorAll('.hero-image');
+            let isTransitioning = false;
+
+            function changeBackground() {
+                if (isTransitioning) return;
+                isTransitioning = true;
+
+                const currentImage = heroImages[currentIndex % 2];
+                const nextImage = heroImages[(currentIndex + 1) % 2];
+                currentIndex = (currentIndex + 1) % images.length;
+
+                nextImage.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('${images[currentIndex]}')`;
+                nextImage.classList.add('active');
+                currentImage.classList.remove('active');
+
+                setTimeout(() => {
+                    isTransitioning = false;
+                }, 1000);
+            }
+
+            heroImages[0].style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('${images[0]}')`;
+            setInterval(changeBackground, 5000);
+
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            const menuOverlay = document.querySelector('.menu-overlay');
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+
+            function closeMenu() {
+                menuToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+                menuOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+                dropdownToggles.forEach(toggle => {
+                    toggle.classList.remove('active');
+                    toggle.parentElement.classList.remove('active');
+                });
+            }
+
+            menuToggle.addEventListener('click', function() {
+                menuToggle.classList.toggle('active');
+                navLinks.classList.toggle('active');
+                menuOverlay.classList.toggle('active');
+                document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+            });
+
+            menuOverlay.addEventListener('click', closeMenu);
+
+            document.querySelectorAll('.nav-links li a').forEach(item => {
+                item.addEventListener('click', closeMenu);
+            });
+
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        const parent = toggle.parentElement;
+                        const isActive = parent.classList.contains('active');
+                        dropdownToggles.forEach(t => {
+                            t.classList.remove('active');
+                            t.parentElement.classList.remove('active');
+                        });
+                        if (!isActive) {
+                            toggle.classList.add('active');
+                            parent.classList.add('active');
+                        }
+                    }
+                });
+            });
+
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('.header');
+                if (window.scrollY > 50) {
+                    header.style.padding = '10px 25px';
+                    header.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.2)';
+                } else {
+                    header.style.padding = '15px 25px';
+                    header.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.15)';
+                }
+            });
+
+            document.querySelectorAll('.nav-links li a').forEach(link => {
+                link.addEventListener('click', function() {
+                    document.querySelectorAll('.nav-links li a').forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

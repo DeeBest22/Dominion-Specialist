@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Articles - Dominion Dashboard</title>
+
+  <meta name="description" content="Manage all articles in the admin dashboard.">
+<link rel="stylesheet" href="../css/articles.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-container">
+      <div class="flex items-center">
+        <button class="hamburger-btn" id="hamburger-toggle" style="background: none; border: none; cursor: pointer; padding: 0.5rem; margin-right: 1rem; border-radius: 8px; transition: all 0.3s ease; color: var(--text-primary); display: none;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <a href="/admin" class="logo">Dominion<span> Specialist</span> Hospital</a>
+      </div>
+      
+      <nav class="nav" id="main-nav">
+        <a href="/" class="nav-item" target="_blank">View Site</a>
+        <a href="#" class="nav-item" id="dark-mode-toggle">Toggle Theme</a>
+        <a href="#" class="nav-item btn btn-outline" id="logout-btn">Logout</a>
+      </nav>
+      
+     
+    </div>
+  </header>
+
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- Dashboard -->
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h3>Welcome, <span id="admin-name">Admin</span></h3>
+      </div>
+      
+      <ul class="sidebar-nav">
+        <li  class="sidebar-nav-item">
+          <a href="/admin" class="sidebar-nav-link">Dashboard</a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="/admin/articles.html" class="sidebar-nav-link active">All Articles</a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="/admin/create-article.html" class="sidebar-nav-link">Create Article</a>
+        </li>
+    
+      </ul>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="dashboard-content">
+      <div class="dashboard-header">
+        <h1>All Articles</h1>
+        <p>Manage all your news articles from here.</p>
+      </div>
+      
+      <!-- Articles Table -->
+      <section class="mb-6">
+        <div class="flex justify-between items-center mb-4">
+          <div class="flex">
+            <select id="status-filter" class="form-control mr-2">
+              <option value="all">All Status</option>
+              <option value="published">Published</option>
+              <option value="draft">Draft</option>
+            </select>
+            <select id="category-filter" class="form-control mr-2">
+              <option value="all">All Categories</option>
+             
+            </select>
+            <input type="text" id="search-articles" placeholder="Search articles..." class="form-control">
+          </div>
+          <a href="/admin/create-article.html" class="btn btn-primary">Create New</a>
+        </div>
+        
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Views</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="articles-table">
+              <tr>
+                <td colspan="6" class="text-center">Loading articles...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div id="articles-pagination" class="mt-4 text-center">
+          <!-- Pagination will be rendered here -->
+        </div>
+      </section>
+    </main>
+  </div>
+
+ 
+  <!-- Scripts -->
+  <script src="/js/main.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>
+<style>
+  .btn-sm.btn-outline {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #007bff;
+  background-color: transparent;
+  border: 2px solid #007bff;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.btn-sm.btn-outline:hover {
+  background-color: #007bff;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-sm.btn-outline:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.3);
+}
+.btn-sm.btn-danger {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  background-color: #e53935;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 4px 10px rgba(229, 57, 53, 0.3);
+}
+
+.btn-sm.btn-danger:hover {
+  background-color: #d32f2f;
+  box-shadow: 0 6px 14px rgba(229, 57, 53, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-sm.btn-danger:active {
+  background-color: #c62828;
+  transform: scale(0.97);
+  box-shadow: 0 3px 8px rgba(229, 57, 53, 0.3);
+}
+
+</style>

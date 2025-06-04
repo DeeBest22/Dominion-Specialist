@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Appointment Booking</title>
+    <link rel="stylesheet" href="css/appointment.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-logo">
+            <img src="Styles/Pictures/logo.png" alt="Dominion Hospital Logo">
+        </div>
+        
+        <ul class="nav-desktop">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="About_Us.html">About Us</a></li>
+            <li class="dropdown">
+                <span class="dropdown-toggle">Resources</span>
+                <ul class="dropdown-menu">
+                    <li><a href="Dominion-Class.html">Dominion Class</a></li>
+                    <li><a href="news.html">Dominion News</a></li>
+                </ul>
+            </li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+        
+        <div class="header-actions">
+            <button class="header-button">Book an Appointment</button>
+            <button class="mobile-menu-btn" aria-label="Open Menu">☰</button>
+        </div>
+    </header>
+
+    <div class="mobile-nav-container">
+        <button class="close-menu" aria-label="Close Menu">✕</button>
+        <ul class="mobile-nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="About_Us.html">About Us</a></li>
+            <li class="dropdown">
+                <span class="dropdown-toggle">Resources</span>
+                <ul class="dropdown-menu">
+                    <li><a href="Dominion-Class.html">Dominion Class</a></li>
+                    <li><a href="Health-Tips.html">Health Tips</a></li>
+                </ul>
+            </li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </div>
+    
+    <div class="menu-overlay"></div>
+
+    <div class="container">
+        <h1 class="page-title">Book Your Appointment</h1>
+        
+        <form action="https://formspree.io/f/xeojwbjb" method="POST" class="appointment-form">
+            <div class="form-row">
+                <div class="form-col">
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="name" name="Name" required>
+                </div>
+                
+                <div class="form-col">
+                    <label for="email">Email Address:</label>
+                    <input type="email" id="email" name="Email" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone_number">Phone Number:</label>
+                <input type="tel" id="phone_number" name="Phone Number" required>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-col">
+                    <label for="date">Preferred Date:</label>
+                    <input type="date" id="date" name="Date" required>
+                </div>
+                
+                <div class="form-col">
+                    <label for="time">Preferred Time:</label>
+                    <input type="time" id="time" name="Time" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="department">Department:</label>
+                <select id="department" name="Department" required>
+                    <option value="">-- Select Department --</option>
+                    <option value="Cardiology">Cardiology</option>
+                    <option value="ENT Surgery">ENT Surgery</option>
+                    <option value="Family Medicine">Family Medicine</option>
+                    <option value="General Medicine">General Medicine</option>
+                    <option value="Obstetrics & Gynecology">Obstetrics & Gynecology</option>
+                    <option value="Paediatrics">Paediatrics</option>
+                    <option value="Preventive Medicine & Health Promotion">Preventive Medicine & Health Promotion</option>
+                    <option value="Radiology Surgery">Radiology Surgery</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="message">Message:</label>
+                <textarea id="message" name="Message" rows="4" placeholder="Please describe your symptoms or reason for appointment..."></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">Submit Appointment</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const closeMenuBtn = document.querySelector('.close-menu');
+            const mobileNavContainer = document.querySelector('.mobile-nav-container');
+            const menuOverlay = document.querySelector('.menu-overlay');
+            const dropdownToggles = document.querySelectorAll('.mobile-nav-links .dropdown-toggle');
+
+            function closeMenu() {
+                mobileNavContainer.classList.remove('active');
+                menuOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+                dropdownToggles.forEach(toggle => {
+                    toggle.parentElement.classList.remove('active');
+                });
+            }
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileNavContainer.classList.add('active');
+                menuOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+
+            closeMenuBtn.addEventListener('click', closeMenu);
+            menuOverlay.addEventListener('click', closeMenu);
+
+            document.querySelectorAll('.mobile-nav-links a').forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const parent = toggle.parentElement;
+                    parent.classList.toggle('active');
+                });
+            });
+
+            const form = document.querySelector('.appointment-form');
+            const dateInput = document.getElementById('date');
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.setAttribute('min', today);
+
+            form.addEventListener('submit', (e) => {
+                const timeInput = document.getElementById('time');
+                const selectedTime = timeInput.value;
+                
+                if (selectedTime) {
+                    const [hours, minutes] = selectedTime.split(':');
+                    if (parseInt(hours) < 8 || parseInt(hours) > 18) {
+                        e.preventDefault();
+                        alert('Please select a time between 8:00 AM and 6:00 PM');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
