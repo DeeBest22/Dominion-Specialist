@@ -199,15 +199,14 @@ if (articleContainer && articleId) {
 
 // Admin Login
 const loginForm = document.getElementById('login-form');
-
 if (loginForm) {
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const errorMsg = document.getElementById('error-msg');
-    
+
     try {
       const response = await fetch('/auth/login', {
         method: 'POST',
@@ -216,15 +215,26 @@ if (loginForm) {
         },
         body: JSON.stringify({ email, password })
       });
-      
-      const data = await response.json();
-      
-      if (data.success) {
-        window.location.href = '/admin';
+
+      const contentType = response.headers.get('content-type');
+
+      if (contentType && contentType.includes('application/json')) {
+        const data = await response.json();
+
+        if (data.success) {
+          window.location.href = '/admin';
+        } else {
+          errorMsg.textContent = data.message || 'Login failed.';
+          errorMsg.style.display = 'block';
+        }
       } else {
-        errorMsg.textContent = data.message;
+        // If backend returned HTML instead of JSON
+        const text = await response.text();
+        console.error('Expected JSON but got HTML:', text);
+        errorMsg.textContent = 'Unexpected server response.';
         errorMsg.style.display = 'block';
       }
+
     } catch (error) {
       console.error('Login error:', error);
       errorMsg.textContent = 'An error occurred. Please try again.';
