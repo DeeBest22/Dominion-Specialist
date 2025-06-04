@@ -46,7 +46,7 @@ export const upload = multer({
 // Connect to MongoDB
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/newswebsite');
+    await mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://faithabayomi18:f1vouroluw11972@dominionspecialist.cdp3oi9.mongodb.net/?retryWrites=true&w=majority&appName=dominionspecialist');
     console.log('MongoDB connected...');
   } catch (err) {
     console.error('MongoDB connection error:', err.message);
