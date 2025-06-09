@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dominion Medical Centre: Breastfeeding Education</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../Styles/b-feed.css">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-logo">
+            <img src="../Pictures/logo.png" alt="Dominion Medical Centre Logo">
+        </div>
+        
+        <ul class="nav-links">
+            <li><a href="../index.html">Home</a></li>
+         
+            <li><a href="../Dominion-Class.html">Resources</a></li>
+           
+            <li><a href="../About_Us.html">About</a></li>
+               <li><a href="../contact.html">Contact Us</a></li>
+        </ul>
+        
+        <button onclick="location.href='../book_appointment.html'" class="header-button">Book Appointment</button>
+        
+        <div class="mobile-menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <!-- Video Section -->
+    <section class="video-section">
+        <div class="container">
+            <div class="video-container">
+                <div class="video-wrapper">
+                    <div class="custom-video-player">
+                        <video id="breastfeeding-video" poster="/api/placeholder/1280/720">
+                            <!-- Using a placeholder video URL -->
+                            <source src="../Resources/Breast feeding position.mp4" type="video/mp4">
+                            <track 
+                                label="English" 
+                                kind="subtitles" 
+                                srclang="en" 
+                                src="captions-en.vtt" 
+                                default>
+                            Your browser does not support the video tag.
+                        </video>
+                        
+                        <div class="video-controls">
+                            <div class="progress-container" id="progress-container">
+                                <div class="progress-bar" id="progress-bar"></div>
+                            </div>
+                            
+                            <div class="controls-row">
+                                <div class="left-controls">
+                                    <button class="control-btn play-pause-btn" id="play-pause-btn">
+                                        <i class="fas fa-play"></i>
+                                    </button>
+                                    <div class="video-time">
+                                        <span id="current-time">0:00</span> / <span id="duration">0:00</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="right-controls">
+                                    <button class="control-btn" id="volume-btn">
+                                        <i class="fas fa-volume-up"></i>
+                                    </button>
+                                    <button class="control-btn" id="captions-btn">
+                                        <i class="fas fa-closed-captioning"></i>
+                                    </button>
+                                    <button class="control-btn" id="fullscreen-btn">
+                                        <i class="fas fa-expand"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="captions-container">
+                            <span class="caption-text" id="caption-text"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="video-info">
+                    <h2 class="video-title">Breastfeeding Basics: A Guide for New Mothers</h2>
+                    
+                    <div class="video-meta">
+                        <span><i class="fas fa-calendar"></i> Released: May 17, 2025</span>
+                        <span><i class="fas fa-clock"></i> Duration: 7:40</span>
+                       
+                    </div>
+                    
+                    <div class="video-description">
+                        <p>This comprehensive guide covers everything new mothers need to know about breastfeeding. The video walks you through proper latching techniques, comfortable positions, establishing a good milk supply, and common challenges you might face.</p>
+                        <p>Whether you're expecting or have already welcomed your little one, this video provides valuable insights to help you and your baby have a positive breastfeeding experience.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional Resources Section -->
+      <section id="resources" class="resources-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Knowledge Library</span>
+                <h2 class="section-title">Essential Educational Resources</h2>
+                <p class="section-description">Discover our carefully curated collection of resources designed to support you through pregnancy, childbirth, and early motherhood.</p>
+            </div>
+            <div class="resources-grid">
+                <!-- Resource 1 -->
+                <div class="resource-card">
+                    <img src="../Pictures/mother-care.png" alt="Mother and Newborn Care" class="resource-img">
+                    <div class="resource-content">
+                        <h3 class="resource-title">Mother & Newborn Care</h3>
+                        <p class="resource-desc">Comprehensive guide on essential care practices for both mothers and newborns in the critical early weeks after birth.</p>
+                              <div style="display: inline;">
+                       <a href="../Resources/CARE - MOTHER + NEWBORN.ppt" download>
+  <button class="resource-button video-btn">Download Resource</button>
+</a>
+
+                     
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Resource 2 -->
+                <div class="resource-card">
+                    <img src="../Pictures/hyp-preg.jpg" alt="Hypertension in Pregnancy" class="resource-img">
+                    <div class="resource-content">
+                        <h3 class="resource-title">Hypertension in Pregnancy</h3>
+                        <p class="resource-desc">Learn about the causes, risks, and management strategies for hypertension during pregnancy from our medical experts.</p>
+                       <div style="display: inline;">
+                           <a href="../Resources/DMC ANC (HYPERTENSION IN PREGNANCY).ppt" download>
+  <button class="resource-button video-btn">Download Resource</button>
+</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Resource 3 -->
+                <div class="resource-card">
+                    <img src="../Pictures/healthy-maternal-nutrition.avif" alt="Nutrition during Pregnancy" class="resource-img">
+                    <div class="resource-content">
+                        <h3 class="resource-title">Nutrition during Pregnancy</h3>
+                        <p class="resource-desc">Discover the optimal nutrition plan for a healthy pregnancy, including essential nutrients and meal planning guidance.</p>
+                        <div style="display: inline;">
+                            <a href="../Resources/NUTRITION DURING PREGNANCY.ppt" download>
+  <button class="resource-button video-btn">Download Resource</button>
+</a>
+                        </div>
+                    </div>
+                </div>
+                
+           
+                
+                <!-- Resource 5 (Video) -->
+          
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About Us</h3>
+                    <p>Dominion Medical Centre is dedicated to providing evidence-based education and support for new parents navigating their breastfeeding journey.</p>
+                    <div style="display: none;" class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../About_Us.html">About Us</a></li>
+                        <li><a href="../Dominion-Class.html">Resources</a></li>
+                        <li><a href="../contact.html">Contact Us</a></li>
+                        <li><a href="../book_appointment.html">Book Appointment</a></li>
+                    </ul>
+                </div>
+                
+                <div style="display: none;" class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Breastfeeding Guides</a></li>
+                        <li><a href="#">Find a Lactation Consultant</a></li>
+                        <li><a href="#">Support Groups</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Research & Studies</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i>dominionspec2@gmail.com</p>
+                    <p><i class="fas fa-phone"></i> +234 8063 289 272</p>
+                    <p><i class="fas fa-map-marker-alt"></i> No 4, Nova Road Adebayo<br>Ado-Ekiti, Ekiti State</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Dominion Medical Centre. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Video Player Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.getElementById('breastfeeding-video');
+            const playPauseBtn = document.getElementById('play-pause-btn');
+            const playPauseIcon = playPauseBtn.querySelector('i');
+            const progressContainer = document.getElementById('progress-container');
+            const progressBar = document.getElementById('progress-bar');
+            const currentTimeElement = document.getElementById('current-time');
+            const durationElement = document.getElementById('duration');
+            const volumeBtn = document.getElementById('volume-btn');
+            const volumeIcon = volumeBtn.querySelector('i');
+            const captionsBtn = document.getElementById('captions-btn');
+            const fullscreenBtn = document.getElementById('fullscreen-btn');
+            const captionText = document.getElementById('caption-text');
+            
+            let isPlaying = false;
+            let isMuted = false;
+            let captionsEnabled = true;
+            let isDragging = false;
+            
+            // Initialize with sample captions (these would normally come from the VTT file)
+       
+            // Format time (seconds to MM:SS)
+            function formatTime(timeInSeconds) {
+                const minutes = Math.floor(timeInSeconds / 60);
+                const seconds = Math.floor(timeInSeconds % 60);
+                return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            }
+            
+            // Update captions based on current time
+            function updateCaptions(currentTime) {
+                if (!captionsEnabled) return;
+                
+                let activeCaptions = sampleCaptions.filter(
+                    caption => currentTime >= caption.start && currentTime <= caption.end
+                );
+                
+                if (activeCaptions.length > 0) {
+                    captionText.textContent = activeCaptions[0].text;
+                    captionText.style.opacity = '1';
+                } else {
+                    captionText.style.opacity = '0';
+                }
+            }
+            
+            // Set video duration when metadata is loaded
+            video.addEventListener('loadedmetadata', function() {
+                durationElement.textContent = formatTime(video.duration);
+                currentTimeElement.textContent = formatTime(0);
+            });
+            
+            // For demo purposes, set a sample duration if video doesn't load
+            setTimeout(() => {
+                if (durationElement.textContent === "0:00") {
+                    durationElement.textContent = "12:30";
+                }
+            }, 1000);
+            
+            // Play/Pause functionality
+            function togglePlayPause() {
+                if (video.paused || video.ended) {
+                    video.play().catch(e => {
+                        console.log("Video play failed:", e);
+                        // Fallback for demo purposes
+                        simulateVideoPlay();
+                    });
+                    playPauseIcon.className = 'fas fa-pause';
+                    isPlaying = true;
+                } else {
+                    video.pause();
+                    playPauseIcon.className = 'fas fa-play';
+                    isPlaying = false;
+                    clearInterval(playbackSimulation);
+                }
+            }
+            
+            playPauseBtn.addEventListener('click', togglePlayPause);
+            video.addEventListener('click', togglePlayPause);
+            
+            // Update progress bar
+            video.addEventListener('timeupdate', function() {
+                const percent = (video.currentTime / video.duration) * 100;
+                progressBar.style.width = `${percent}%`;
+                currentTimeElement.textContent = formatTime(video.currentTime);
+                
+                // Update captions
+                updateCaptions(video.currentTime);
+            });
+            
+            // Handle seeking when clicking on progress bar
+            progressContainer.addEventListener('click', function(e) {
+                const progressWidth = progressContainer.clientWidth;
+                const clickPosition = e.offsetX;
+                const seekTime = (clickPosition / progressWidth) * video.duration;
+                
+                video.currentTime = seekTime;
+            });
+            
+            // Touch-friendly seeking for mobile devices
+            progressContainer.addEventListener('touchstart', function(e) {
+                e.preventDefault(); // Prevent default touch behavior
+                isDragging = true;
+                
+                const progressRect = progressContainer.getBoundingClientRect();
+                const touchX = e.touches[0].clientX - progressRect.left;
+                const seekTime = (touchX / progressRect.width) * video.duration;
+                
+                video.currentTime = seekTime;
+            });
+            
+            // Handle touch drag on progress bar
+            progressContainer.addEventListener('touchmove', function(e) {
+                if (isDragging) {
+                    e.preventDefault();
+                    
+                    const progressRect = progressContainer.getBoundingClientRect();
+                    const touchX = e.touches[0].clientX - progressRect.left;
+                    const percent = Math.max(0, Math.min(1, touchX / progressRect.width));
+                    const seekTime = percent * video.duration;
+                    
+                    video.currentTime = seekTime;
+                }
+            });
+            
+            progressContainer.addEventListener('touchend', function() {
+                isDragging = false;
+            });
+            
+            // Volume control
+            volumeBtn.addEventListener('click', function() {
+                if (video.muted) {
+                    video.muted = false;
+                    volumeIcon.className = 'fas fa-volume-up';
+                    isMuted = false;
+                } else {
+                    video.muted = true;
+                    volumeIcon.className = 'fas fa-volume-mute';
+                    isMuted = true;
+                }
+            });
+            
+            // Captions toggle
+            captionsBtn.addEventListener('click', function() {
+                captionsEnabled = !captionsEnabled;
+                captionsBtn.style.color = captionsEnabled ? 'white' : '#888';
+                captionText.style.opacity = captionsEnabled ? '1' : '0';
+            });
+            
+            // Fullscreen toggle
+            fullscreenBtn.addEventListener('click', function() {
+                const videoContainer = document.querySelector('.custom-video-player');
+                
+                if (!document.fullscreenElement) {
+                    if (videoContainer.requestFullscreen) {
+                        videoContainer.requestFullscreen();
+                    } else if (videoContainer.webkitRequestFullscreen) {
+                        videoContainer.webkitRequestFullscreen();
+                    } else if (videoContainer.msRequestFullscreen) {
+                        videoContainer.msRequestFullscreen();
+                    }
+                    
+                    // Ensure controls are visible in fullscreen
+                    document.querySelector('.video-controls').style.opacity = '1';
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    } else if (document.msExitFullscreen) {
+                        document.msExitFullscreen();
+                    }
+                }
+            });
+            
+            // Add fullscreen change event listeners
+            document.addEventListener('fullscreenchange', handleFullscreenChange);
+            document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+            document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+            document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+            
+            function handleFullscreenChange() {
+                const isFullscreen = document.fullscreenElement || 
+                                     document.webkitFullscreenElement || 
+                                     document.mozFullScreenElement || 
+                                     document.msFullscreenElement;
+                                     
+                const fullscreenIcon = fullscreenBtn.querySelector('i');
+                
+                if (isFullscreen) {
+                    fullscreenIcon.className = 'fas fa-compress';
+                    // Make controls always visible on mobile in fullscreen
+                    if (window.innerWidth <= 768) {
+                        document.querySelector('.video-controls').style.opacity = '1';
+                    }
+                } else {
+                    fullscreenIcon.className = 'fas fa-expand';
+                }
+            }
+            
+            // Handle video end
+            video.addEventListener('ended', function() {
+                playPauseIcon.className = 'fas fa-play';
+                isPlaying = false;
+                progressBar.style.width = '0%';
+                currentTimeElement.textContent = formatTime(0);
+                clearInterval(playbackSimulation);
+            });
+            
+            // For demo purposes - fallback simulation in case video doesn't play
+            let playbackSimulation;
+            
+            function simulateVideoPlay() {
+                console.log("Using video simulation");
+                let simulatedTime = 0;
+                const totalDuration = 750; // 12:30 in seconds
+                
+                // Clear any existing interval
+                clearInterval(playbackSimulation);
+                
+                playbackSimulation = setInterval(() => {
+                    simulatedTime += 1;
+                    
+                    if (simulatedTime <= totalDuration) {
+                        const percent = (simulatedTime / totalDuration) * 100;
+                        progressBar.style.width = `${percent}%`;
+                        currentTimeElement.textContent = formatTime(simulatedTime);
+                        
+                        // Update captions
+                        updateCaptions(simulatedTime);
+                    } else {
+                        // End of video simulation
+                        playPauseIcon.className = 'fas fa-play';
+                        isPlaying = false;
+                        clearInterval(playbackSimulation);
+                    }
+                }, 1000);
+            }
+            
+            // Mobile menu toggle functionality
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            
+            if (mobileMenuToggle) {
+                mobileMenuToggle.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    // Add your mobile menu open/close logic here
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+<script>
+// Updated script for the mobile menu toggle functionality with left slide-out
+document.addEventListener('DOMContentLoaded', function() {
+    // Mobile menu toggle functionality
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    const body = document.body;
+    
+    // Create overlay element
+    const overlay = document.createElement('div');
+    overlay.className = 'nav-overlay';
+    body.appendChild(overlay);
+    
+    if (mobileMenuToggle && navLinks) {
+        mobileMenuToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            // Prevent body scrolling when menu is open
+            if (navLinks.classList.contains('active')) {
+                body.style.overflow = 'hidden';
+            } else {
+                body.style.overflow = '';
+            }
+        });
+    }
+    
+    // Close menu when clicking a navigation link on mobile
+    const navLinkItems = document.querySelectorAll('.nav-links li a');
+    navLinkItems.forEach(link => {
+        link.addEventListener('click', function() {
+            if (window.innerWidth <= 768) {
+                navLinks.classList.remove('active');
+                mobileMenuToggle.classList.remove('active');
+                overlay.classList.remove('active');
+                body.style.overflow = '';
+            }
+        });
+    });
+    
+    // Close menu when clicking on the overlay
+    overlay.addEventListener('click', function() {
+        if (navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            mobileMenuToggle.classList.remove('active');
+            overlay.classList.remove('active');
+            body.style.overflow = '';
+        }
+    });
+    
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            mobileMenuToggle.classList.remove('active');
+            overlay.classList.remove('active');
+            body.style.overflow = '';
+        }
+    });
+});
+</script>
+<style>
+/* Mobile menu styling with custom color variables */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.header-logo img {
+    max-height: 60px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    margin: 0 1rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--secondary-color);
+}
+
+.header-button {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.header-button:hover {
+    background-color: var(--primary-color);
+}
+
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    cursor: pointer;
+}
+
+.mobile-menu-toggle span {
+    height: 3px;
+    width: 100%;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+/* Mobile responsive styling */
+@media (max-width: 768px) {
+    .header {
+        padding: 1rem;
+    }
+    
+    .header-logo img {
+        max-height: 40px;
+    }
+    
+    .nav-links {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        flex-direction: column;
+        background-color: var(--primary-color);
+        width: 80%;
+        height: 100vh;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+        padding-top: 80px;
+        justify-content: flex-start;
+        z-index: 999;
+    }
+    
+    .nav-links.active {
+        left: 0;
+    }
+    
+    .nav-links li {
+        margin: 15px 30px;
+        text-align: left;
+        opacity: 0;
+        transform: translateX(-30px);
+        transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    
+    .nav-links.active li {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    
+    .nav-links a {
+        color: white;
+        font-size: 1.2rem;
+        display: block;
+        padding: 10px 0;
+    }
+    
+    .nav-links a:hover {
+        color: var(--secondary-color);
+    }
+    
+    /* Staggered animation for nav items */
+    .nav-links li:nth-child(1) { transition-delay: 0.1s; }
+    .nav-links li:nth-child(2) { transition-delay: 0.2s; }
+    .nav-links li:nth-child(3) { transition-delay: 0.3s; }
+    .nav-links li:nth-child(4) { transition-delay: 0.4s; }
+    
+    .mobile-menu-toggle {
+        display: flex;
+        z-index: 1001;
+    }
+    
+    .mobile-menu-toggle.active span:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+        background-color: white;
+    }
+    
+    .mobile-menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .mobile-menu-toggle.active span:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+        background-color: white;
+    }
+    
+    /* Overlay effect when menu is open */
+    .nav-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 998;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .nav-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .header-button {
+        display: none;
+    }
+}
+</style>
