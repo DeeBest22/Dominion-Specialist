@@ -6,7 +6,17 @@ const router = express.Router();
 // Register a new admin user
 router.post('/register', async (req, res) => {
   try {
+    console.log('Registration attempt:', req.body);
+    
     const { username, email, password } = req.body;
+    
+    // Validate input
+    if (!username || !email || !password) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Username, email, and password are required' 
+      });
+    }
     
     // Check if user already exists
     const existingUser = await User.findOne({ $or: [{ email }, { username }] });
@@ -26,6 +36,7 @@ router.post('/register', async (req, res) => {
     });
     
     await user.save();
+    console.log('User created successfully:', user.username);
     
     // Set session
     req.session.userId = user._id;
@@ -42,14 +53,27 @@ router.post('/register', async (req, res) => {
     });
   } catch (err) {
     console.error('Registration Error:', err);
-    res.status(500).json({ success: false, message: err.message });
+    res.status(500).json({ 
+      success: false, 
+      message: 'Registration failed: ' + err.message 
+    });
   }
 });
 
 // Login user
 router.post('/login', async (req, res) => {
   try {
+    console.log('Login attempt:', req.body);
+    
     const { email, password } = req.body;
+    
+    // Validate input
+    if (!email || !password) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Email and password are required' 
+      });
+    }
     
     // Find user by email
     const user = await User.findOne({ email });
@@ -71,7 +95,7 @@ router.post('/login', async (req, res) => {
     
     // Set session
     req.session.userId = user._id;
-    console.log('Session after login:', req.session);
+    console.log('Login successful for user:', user.username);
     
     res.json({ 
       success: true, 
@@ -85,13 +109,16 @@ router.post('/login', async (req, res) => {
     });
   } catch (err) {
     console.error('Login Error:', err);
-    res.status(500).json({ success: false, message: err.message });
+    res.status(500).json({ 
+      success: false, 
+      message: 'Login failed: ' + err.message 
+    });
   }
 });
 
 // Check auth status
 router.get('/status', (req, res) => {
-  console.log('Current session:', req.session);
+  console.log('Auth status check - Session:', req.session);
   if (req.session && req.session.userId) {
     return res.json({ 
       success: true, 

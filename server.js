@@ -57,8 +57,8 @@ const connectDB = async () => {
 connectDB();
 
 // Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Create uploads directory if it doesn't exist
@@ -70,17 +70,25 @@ if (!fs.existsSync(uploadsDir)) {
 
 // Session configuration
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'news-website-secret',
+  secret: process.env.SESSION_SECRET || 'news-website-secret-key-2025',
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({ 
-    mongoUrl: process.env.MONGODB_URI || 'mongodb://localhost:27017/newswebsite',
+    mongoUrl: process.env.MONGODB_URI || 'mongodb+srv://faithabayomi18:f1vouroluw11972@dominionspecialist.cdp3oi9.mongodb.net/?retryWrites=true&w=majority&appName=dominionspecialist',
     ttl: 14 * 24 * 60 * 60 // 14 days
   }),
   cookie: {
-    maxAge: 14 * 24 * 60 * 60 * 1000 // 14 days
+    maxAge: 14 * 24 * 60 * 60 * 1000, // 14 days
+    secure: false, // Set to true in production with HTTPS
+    httpOnly: true
   }
 }));
+
+// Add request logging middleware
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path}`, req.body);
+  next();
+});
 
 // Import routes after middleware setup
 import authRoutes from './routes/auth.js';
@@ -106,17 +114,39 @@ app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
+app.get('/register', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'register.html'));
+});
+
+// Catch-all route for SPA
+app.get('*', (req, res) => {
+  // Check if it's an API route
+  if (req.path.startsWith('/api') || req.path.startsWith('/auth') || req.path.startsWith('/admin')) {
+    return res.status(404).json({ success: false, message: 'Route not found' });
+  }
+  
+  // For other routes, serve the main page
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ 
-    success: false, 
-    message: 'Server Error', 
-    error: process.env.NODE_ENV === 'development' ? err.message : undefined 
-  });
+  console.error('Server Error:', err.stack);
+  
+  // Ensure we always send JSON for API routes
+  if (req.path.startsWith('/api') || req.path.startsWith('/auth') || req.path.startsWith('/admin')) {
+    return res.status(500).json({ 
+      success: false, 
+      message: 'Server Error', 
+      error: process.env.NODE_ENV === 'development' ? err.message : 'Internal server error'
+    });
+  }
+  
+  res.status(500).send('Something went wrong!');
 });
 
 // Start server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });
