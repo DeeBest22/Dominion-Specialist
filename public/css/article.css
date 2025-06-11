@@ -477,6 +477,7 @@ body {
 }
 
 .article-body {
+    text-align: left;
   font-size: var(--font-size-lg);
   line-height: 1.8;
   color: var(--text-primary);
