@@ -1,24 +1,16 @@
 import multer from 'multer';
-import cloudinary from 'cloudinary';
+import path from 'path';
 
-import { CloudinaryStorage } from 'multer-storage-cloudinary';
-
-// 🔐 Configure Cloudinary
-cloudinary.config({
-  cloud_name: 'dbqcl3gyu',
-  api_key: '125497217998532',
-  api_secret: 'w5UR9A2UgzujVlcuzmnOFRr56Bg'
-});
-
-// 📦 Set up storage
-const storage = new CloudinaryStorage({
-  cloudinary,
-  params: {
-    folder: 'uploads', // Cloudinary folder name
-    allowed_formats: ['jpg', 'png', 'jpeg', 'webp'], // Optional
-    transformation: [{ width: 800, crop: 'limit' }]  // Optional
+// Set storage config
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/uploads');
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    const ext = path.extname(file.originalname);
+    cb(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
   }
 });
 
-// ✅ Multer upload middleware
 export const upload = multer({ storage });
