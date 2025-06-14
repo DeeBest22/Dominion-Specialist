@@ -3,8 +3,6 @@ import Article from '../models/Article.js';
 import { isAuthenticated } from '../middleware/auth.js';
 import sanitizeHtml from 'sanitize-html';
 import { upload } from '../utils/upload.js';
-import { CloudinaryStorage } from 'multer-storage-cloudinary';
-
 
 const router = express.Router();
 
@@ -126,8 +124,7 @@ router.post('/', isAuthenticated, upload.array('media', 10), async (req, res) =>
         const fileType = file.mimetype.startsWith('image') ? 'image' : 'video';
         mediaFiles.push({
           type: fileType,
-        url: file.path,
-
+          url: `/uploads/${file.filename}`,
           caption: ''
         });
       });
@@ -204,8 +201,7 @@ router.put('/:id', isAuthenticated, upload.array('media', 10), async (req, res) 
         const fileType = file.mimetype.startsWith('image') ? 'image' : 'video';
         article.media.push({
           type: fileType,
-          url: file.path,
-
+          url: `/uploads/${file.filename}`,
           caption: ''
         });
       });
