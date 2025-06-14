@@ -124,7 +124,8 @@ router.post('/', isAuthenticated, upload.array('media', 10), async (req, res) =>
         const fileType = file.mimetype.startsWith('image') ? 'image' : 'video';
         mediaFiles.push({
           type: fileType,
-          url: `/uploads/${file.filename}`,
+        url: file.path,
+
           caption: ''
         });
       });
@@ -201,7 +202,8 @@ router.put('/:id', isAuthenticated, upload.array('media', 10), async (req, res) 
         const fileType = file.mimetype.startsWith('image') ? 'image' : 'video';
         article.media.push({
           type: fileType,
-          url: `/uploads/${file.filename}`,
+          url: file.path,
+
           caption: ''
         });
       });
