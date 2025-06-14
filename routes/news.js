@@ -3,7 +3,7 @@ import Article from '../models/Article.js';
 import { isAuthenticated } from '../middleware/auth.js';
 import sanitizeHtml from 'sanitize-html';
 import { upload } from '../utils/upload.js';
-import { CloudinaryStorage } from 'multer-storage-cloudinary-v2';
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
 
 
 const router = express.Router();
