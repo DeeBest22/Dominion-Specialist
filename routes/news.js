@@ -14,15 +14,12 @@ router.get('/', async (req, res) => {
     const category = req.query.category;
     const search = req.query.search;
     
-    // Build query
     const query = { published: true };
     
-    // Add category filter if provided
     if (category && category !== 'All') {
       query.category = category;
     }
     
-    // Add search filter if provided
     if (search) {
       query.$or = [
         { title: { $regex: search, $options: 'i' } },
@@ -88,7 +85,6 @@ router.get('/:id', async (req, res) => {
       });
     }
     
-    // Increment view count
     article.views += 1;
     await article.save();
     
@@ -117,14 +113,15 @@ router.post('/', isAuthenticated, upload.array('media', 10), async (req, res) =>
       }
     });
     
-    // Process uploaded files
+    // Process uploaded files from Cloudinary
     const mediaFiles = [];
     if (req.files && req.files.length > 0) {
       req.files.forEach(file => {
         const fileType = file.mimetype.startsWith('image') ? 'image' : 'video';
         mediaFiles.push({
           type: fileType,
-          url: `/uploads/${file.filename}`,
+          url: file.path, // Cloudinary URL
+          publicId: file.filename, // Cloudinary public ID
           caption: ''
         });
       });
@@ -195,13 +192,14 @@ router.put('/:id', isAuthenticated, upload.array('media', 10), async (req, res) 
       }
     });
     
-    // Process uploaded files
+    // Process uploaded files from Cloudinary
     if (req.files && req.files.length > 0) {
       req.files.forEach(file => {
         const fileType = file.mimetype.startsWith('image') ? 'image' : 'video';
         article.media.push({
           type: fileType,
-          url: `/uploads/${file.filename}`,
+          url: file.path, // Cloudinary URL
+          publicId: file.filename, // Cloudinary public ID
           caption: ''
         });
       });
@@ -245,7 +243,6 @@ router.delete('/:id', isAuthenticated, async (req, res) => {
       });
     }
     
-    // Check if user is the author
     if (article.author.toString() !== req.session.userId) {
       return res.status(403).json({ 
         success: false, 
