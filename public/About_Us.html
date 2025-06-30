@@ -1,991 +1,669 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - Smart Steps Tutorial</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding-top: 80px;
-            overflow-x: hidden;
-        }
-
-        /* Navigation Styles */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar.scrolled {
-            background: rgba(255, 255, 255, 0.98);
-            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 80px;
-        }
-
-        .nav-logo h2 {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-size: 1.8rem;
-            font-weight: bold;
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-            align-items: center;
-        }
-
-        .nav-link {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-            padding: 8px 16px;
-            border-radius: 25px;
-        }
-
-        .nav-link:hover,
-        .nav-link.active {
-            color: #667eea;
-            background: rgba(102, 126, 234, 0.1);
-        }
-
-        .nav-link.register-btn {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .nav-link.register-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-            color: white;
-        }
-
-        /* Hamburger Menu Styles */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            padding: 0.5rem;
-            z-index: 1001;
-            transition: all 0.3s ease;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: #333;
-            margin: 2px 0;
-            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            transform-origin: center;
-            border-radius: 2px;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-            background: #667eea;
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-            transform: translateX(-20px);
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -6px);
-            background: #667eea;
-        }
-
-        /* Mobile Menu Overlay - Half Width */
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 50%;
-            height: 100vh;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.98), rgba(118, 75, 162, 0.98));
-            backdrop-filter: blur(20px);
-            z-index: 999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .mobile-menu.active {
-            transform: translateX(0);
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .mobile-menu-links {
-            list-style: none;
-            text-align: center;
-            padding: 0;
-        }
-
-        .mobile-menu-links li {
-            margin: 2rem 0;
-            transform: translateX(50px);
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-
-        .mobile-menu.active .mobile-menu-links li {
-            transform: translateX(0);
-            opacity: 1;
-        }
-
-        .mobile-menu.active .mobile-menu-links li:nth-child(1) { transition-delay: 0.1s; }
-        .mobile-menu.active .mobile-menu-links li:nth-child(2) { transition-delay: 0.2s; }
-        .mobile-menu.active .mobile-menu-links li:nth-child(3) { transition-delay: 0.3s; }
-        .mobile-menu.active .mobile-menu-links li:nth-child(4) { transition-delay: 0.4s; }
-        .mobile-menu.active .mobile-menu-links li:nth-child(5) { transition-delay: 0.5s; }
-
-        .mobile-menu-links a {
-            color: white;
-            font-size: 2rem;
-            font-weight: 600;
-            text-decoration: none;
-            position: relative;
-            display: inline-block;
-            padding: 1rem 2rem;
-            transition: all 0.3s ease;
-            border-radius: 50px;
-        }
-
-        .mobile-menu-links a:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(1.1);
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-        }
-
-        .mobile-menu-links a::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 3px;
-            background: white;
-            transition: width 0.3s ease;
-            border-radius: 2px;
-        }
-
-        .mobile-menu-links a:hover::before {
-            width: 80%;
-        }
-
-        /* Mobile Menu Background Animation */
-        .mobile-menu::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
-            z-index: -1;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* Footer Styles */
-        .footer {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            color: white;
-            padding: 60px 0 20px;
-            margin-top: 80px;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-section h3 {
-            color: #667eea;
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-        }
-
-        .footer-section h4 {
-            color: #667eea;
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-        }
-
-        .footer-section p {
-            line-height: 1.8;
-            margin-bottom: 20px;
-            opacity: 0.9;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-link {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            background: rgba(102, 126, 234, 0.2);
-            border-radius: 50%;
-            text-align: center;
-            line-height: 40px;
-            text-decoration: none;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-        }
-
-        .social-link:hover {
-            background: #667eea;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: block;
-            padding: 5px 0;
-        }
-
-        .footer-links a:hover {
-            color: #667eea;
-            padding-left: 10px;
-        }
-
-        .contact-info p {
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 30px;
-        }
-
-        .footer-bottom-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .footer-bottom-links {
-            display: flex;
-            gap: 20px;
-        }
-
-        .footer-bottom-links a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-bottom-links a:hover {
-            color: #667eea;
-        }
-
-        /* Hero Header Update */
-        .hero-header {
-            text-align: center;
-            padding: 60px 0 40px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            margin-bottom: 40px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .hero-header h1 {
-            font-size: 3rem;
-            color: #2c3e50;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-header p {
-            font-size: 1.2rem;
-            color: #666;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .header {
-            text-align: center;
-            padding: 40px 0;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            margin-bottom: 40px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .header h1 {
-            font-size: 3rem;
-            color: #2c3e50;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .header p {
-            font-size: 1.2rem;
-            color: #666;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .section {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 40px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
-        }
-
-        .section h2 {
-            font-size: 2.5rem;
-            color: #2c3e50;
-            margin-bottom: 20px;
-            text-align: center;
-            position: relative;
-        }
-
-        .section h2::after {
-            content: '';
-            display: block;
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            margin: 15px auto;
-            border-radius: 2px;
-        }
-
-        .what-we-do {
-            text-align: center;
-            font-size: 1.1rem;
-            color: #555;
-            line-height: 1.8;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
-        }
-
-        .service-card {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            color: white;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            transform: rotate(45deg);
-            transition: all 0.5s ease;
-        }
-
-        .service-card:hover::before {
-            transform: rotate(45deg) translate(20px, 20px);
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-        }
-
-        .service-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .service-card p {
-            font-size: 1rem;
-            opacity: 0.9;
-            position: relative;
-            z-index: 2;
-        }
-
-        .lecturers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
-        }
-
-        .lecturer-card {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .lecturer-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .lecturer-card:hover::before {
-            left: 100%;
-        }
-
-        .lecturer-card:hover {
-            transform: translateY(-10px) rotateY(5deg);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-        }
-
-        .lecturer-image {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: white;
-            font-weight: bold;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .lecturer-image::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
-            animation: shimmer 3s infinite;
-        }
-
-        @keyframes shimmer {
-            0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(180deg); }
-        }
-
-        .lecturer-card h3 {
-            font-size: 1.4rem;
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-
-        .lecturer-card .subjects {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin: 10px 0;
-            display: inline-block;
-        }
-
-        .lecturer-card p {
-            color: #666;
-            font-size: 0.9rem;
-            margin-top: 15px;
-            line-height: 1.6;
-        }
-
-        .floating-elements {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .floating-element {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .floating-element:nth-child(1) {
-            width: 80px;
-            height: 80px;
-            top: 20%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .floating-element:nth-child(2) {
-            width: 120px;
-            height: 120px;
-            top: 60%;
-            right: 10%;
-            animation-delay: 2s;
-        }
-
-        .floating-element:nth-child(3) {
-            width: 60px;
-            height: 60px;
-            bottom: 20%;
-            left: 20%;
-            animation-delay: 4s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
-            }
-            
-            .hamburger {
-                display: flex;
-            }
-            
-            .mobile-menu {
-                width: 50%;
-            }
-            
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            .section {
-                padding: 20px;
-                margin-bottom: 20px;
-            }
-            
-            .section h2 {
-                font-size: 2rem;
-            }
-            
-            .services-grid,
-            .lecturers-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .mobile-menu-links a {
-                font-size: 1.5rem;
-                padding: 0.8rem 1.5rem;
-            }
-
-            .nav-container {
-                padding: 0 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .mobile-menu {
-                width: 60%;
-            }
-            
-            .mobile-menu-links a {
-                font-size: 1.3rem;
-            }
-
-            .hamburger span {
-                width: 20px;
-                height: 2px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="floating-elements">
-        <div class="floating-element"></div>
-        <div class="floating-element"></div>
-        <div class="floating-element"></div>
-    </div>
-
-    <!-- Navigation Header -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <h2>Smart Steps Tutorial</h2>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link active">About</a></li>
-                <li><a href="courses.html" class="nav-link">Courses</a></li>
-                <li><a href="Contact.html" class="nav-link">Contact</a></li>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dominion Specialist and Medical Diagnostics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/aboutus.css">
+  </head>
+  <body>
+    <!-- Header Section with Mobile Menu -->
+    <header class="header">
+      <div class="header-logo">
+        <div class="logo-placeholder">
+          <img style="height: 75px;" src="Pictures/logo.png" alt="">
+          <span>Dominion Specialist</span>
+        </div>
+      </div>
+      
+      <div class="nav-container" id="navContainer">
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#about" class="active">About Us</a></li>
+          <li class="dropdown">
+            <span class="dropdown-toggle">Resources</span>
+            <ul class="dropdown-menu">
+              <li><a href="Dominion-Class.html">Maternal Education</a></li>
+              <li><a href="news.html">Dominion News</a></li>
             </ul>
-            <!-- Hamburger Menu Button -->
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu" id="mobileMenu">
-        <ul class="mobile-menu-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="courses.html">Courses</a></li>
-            <li><a href="Contact.html">Contact</a></li>
+          </li>
+          <li><a href="contact.html">Contact Us</a></li>
         </ul>
-    </div>
+      </div>
+      
+      <button class="header-button" onclick="bookAppointment()">Book an Appointment</button>
+      
+      <div class="overlay" id="menuOverlay"></div>
+      <div class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </header>
 
-    <div class="container">
-        <div class="hero-header">
-            <h1>About Smart Steps Tutorial</h1>
-            <p>Empowering Students to Excel in JAMB & UTME Examinations</p>
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+      <div class="hero-background">
+        <div class="floating-elements">
+          <div class="float-element"></div>
+          <div class="float-element"></div>
+          <div class="float-element"></div>
+          <div class="float-element"></div>
         </div>
+      </div>
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span class="title-line">Healthcare.</span>
+          <span class="title-line">Hospitality.</span>
+          <span class="title-line">Humaneness.</span>
+        </h1>
+        <p class="hero-subtitle">Excellence in medical care since 2011</p>
+        <div class="scroll-indicator">
+          <div class="scroll-arrow"></div>
+        </div>
+      </div>
+    </section>
 
-        <div class="section">
-            <h2>What We Do</h2>
-            <div class="what-we-do">
-                <p>At Smart Steps Tutorial, we are dedicated to transforming the educational journey of aspiring students preparing for JAMB and UTME examinations. Our comprehensive approach combines innovative teaching methods with personalized attention to ensure every student reaches their full potential.</p>
-                
-                <p>We believe that success in academics comes from understanding concepts deeply, practicing consistently, and having the right guidance. Our experienced team of educators works tirelessly to create an environment where learning is engaging, effective, and enjoyable.</p>
-                
-                <p>With years of proven results and countless success stories, we continue to be the trusted partner for students aiming to secure admission into their dream universities across Nigeria.</p>
+    <!-- Our Story Section -->
+    <section class="story-section" id="about">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Our Story</h2>
+          <div class="title-underline"></div>
+        </div>
+        <div class="story-content">
+          <div class="story-text">
+            <div class="story-paragraph">
+              <p>From its inception on <strong>September 1, 2011</strong>, Dominion Specialist had clearly defined its brand — <strong>Healthcare. Hospitality. Humaneness</strong>. We have endeavoured over the last one-and-half decades to adhere to these founding principles in order to deliver quality healthcare to our esteemed patients.</p>
             </div>
-        </div>
-
-        <div class="section">
-            <h2>Our Services</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>Online Classes</h3>
-                    <p>Interactive live sessions with expert tutors, featuring real-time Q&A and personalized feedback to enhance your learning experience.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Video Tutorials</h3>
-                    <p>Comprehensive recorded lessons available 24/7, allowing you to learn at your own pace and revisit complex topics anytime.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Study Materials</h3>
-                    <p>Carefully curated resources including past questions, practice tests, and detailed explanations to boost your exam confidence.</p>
-                </div>
+            <div class="story-paragraph">
+              <p>Our story began with the passion to ensure that trained and competent medical, nursing and paramedical staff provided services in an environment that is hospitable — comfortable, compassionate and without discrimination, yet affordable and easily accessible despite being in a resource-limited nation.</p>
             </div>
-        </div>
-
-        <div class="section" style="display: none;">
-            <h2>Meet Our Expert Lecturers</h2>
-            <div class="lecturers-grid">
-                <div class="lecturer-card">
-                    <div class="lecturer-image">DR</div>
-                    <h3>Dr. Adebayo Johnson</h3>
-                    <div class="subjects">Mathematics</div>
-                    <p>PhD in Mathematics with 15+ years of teaching experience. Specializes in making complex mathematical concepts simple and accessible to all students.</p>
-                </div>
-                
-                <div class="lecturer-card">
-                    <div class="lecturer-image">MS</div>
-                    <h3>Mrs. Sarah Okafor</h3>
-                    <div class="subjects">English Language</div>
-                    <p>Masters in English Literature and certified JAMB examiner. Expert in grammar, comprehension, and essay writing techniques.</p>
-                </div>
-                
-                <div class="lecturer-card">
-                    <div class="lecturer-image">PR</div>
-                    <h3>Prof. Michael Eze</h3>
-                    <div class="subjects">Physics</div>
-                    <p>Professor of Physics with extensive research background. Known for practical demonstrations and clear explanations of physics principles.</p>
-                </div>
-                
-                <div class="lecturer-card">
-                    <div class="lecturer-image">DR</div>
-                    <h3>Dr. Fatima Aliyu</h3>
-                    <div class="subjects">Chemistry</div>
-                    <p>PhD in Analytical Chemistry. Excels at breaking down chemical equations and reactions into easy-to-understand steps for students.</p>
-                </div>
-                
-                <div class="lecturer-card">
-                    <div class="lecturer-image">MR</div>
-                    <h3>Mr. Emmanuel Okoro</h3>
-                    <div class="subjects">Biology</div>
-                    <p>Masters in Biological Sciences with a passion for life sciences. Uses innovative teaching methods to make biology concepts memorable.</p>
-                </div>
+            <div class="story-paragraph">
+              <p>The testimonials from our clients continually confirm that we are headed in the right direction as to the delivery on our mandate. As we prepare to mark our 14th anniversary, we are strategically positioning the facility to become the most referenced health institution in the State within the next decade, providing comprehensive and patient-tailored care to the populace.</p>
             </div>
+          </div>
+          <div class="story-visual">
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                  <h4>2011</h4>
+                  <p>Founded with core values</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                  <h4>2025</h4>
+                  <p>14 years of excellence</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                  <h4>Future</h4>
+                  <p>Leading healthcare in the state</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Meet Our Team</h2>
+          <div class="title-underline"></div>
+        </div>
+        <div class="team-grid">
+          <!-- Team Member 1 - Featured / Superior Card -->
+          <div class="team-card featured-card">
+            <div class="team-image">
+              <div class="image-placeholder">
+                <img src="Pictures/dr-tolu.png" alt="Prof. Awoleke, Jacob Olumuyiwa">
+              </div>
+              <div style="display: none;" class="card-overlay">
+                <div class="social-links">
+                  <a href="#"><i class="fab fa-linkedin"></i></a>
+                  <a href="#"><i class="fas fa-envelope"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="team-info">
+              <div class="featured-badge">
+                <i class="fas fa-star"></i> Chief Medical Director
+              </div>
+              <h3>Prof. Awoleke, Jacob Olumuyiwa</h3>
+              <p class="team-credentials">MBBS (Lagos), MSc (Liverpool John Moores), FWACS, FMCOG</p>
+              <div class="team-description">
+                <p>Professor Awoleke is the Chief Medical Director, and the Pioneer Coordinator, Health Services and Training of the Centre. His extensive clinical experience in both private and public health institutions over the last three decades has moulded the outpatient services in Dominion Specialist into a responsive, patient-centered unit in the facility.</p>
+                <p>Since the hospital's creation in 2011, he has attended to hundreds of walk-in and emergency patients, spearheading their management and optimizing the standards-of-care protocol. He also provides clinical services to the Hospital via specialist prenatal clinics, gynaecological clinic sessions, and conduct of various obstetric and gynaecological surgeries.</p>
+                <p>He is also Chair, Feto-Maternal Medicine Unit of the Department of Obstetrics and Gynaecology, College of Medicine, Ekiti State University, Ado-Ekiti, Nigeria, with research interests revolving around feto-maternal medicine and adolescent gynaecology/reproductive health issues.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Team Member 2 -->
+          <div class="team-card">
+            <div class="team-image">
+              <div class="image-placeholder">
+                <img src="Pictures/dr-ige.png" alt="Dr. Ige, Joshua Taye">
+              </div>
+              <div style="display: none;" class="card-overlay">
+                <div class="social-links">
+                  <a href="#"><i class="fab fa-linkedin"></i></a>
+                  <a href="#"><i class="fas fa-envelope"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="team-info">
+              <h3>Dr. Ige, Joshua Taye</h3>
+              <p class="team-credentials">MBBS, FWACS</p>
+              <p class="team-role">General and Paediatric Surgeon</p>
+              <div class="team-description">
+                <p>Dr. Ige is an accomplished General and Paediatric Surgeon with over three decades of post-specialist experience in his field. He has successfully conducted major surgical procedures — mastectomy, thyroidectomy, laparotomy for tumour excision etc, and other emergency interventions.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Team Member 3 -->
+          <div class="team-card">
+            <div class="team-image">
+              <div class="image-placeholder">
+                <img src="Pictures/akinyemi.jpg" alt="">
+              </div>
+              <div style="display: none;" class="card-overlay">
+                <div class="social-links">
+                  <a href="#"><i class="fab fa-linkedin"></i></a>
+                  <a href="#"><i class="fas fa-envelope"></i></a>
+                </div>
+              </div>
+            </div>
+            <div class="team-info">
+              <h3>Nurse Akinyemi Toyin</h3>
+              <p class="team-credentials">RN, BNSc</p>
+              <p class="team-role">Lead Nurse</p>
+              <div class="team-description">
+                <p>As Lead Nurse, Toyin has served in various units of the hospital — outpatient, emergency department, operating room and prenatal clinics. She is a compassionate nurse who has competently and conscientiously cared for patients from all walks of life.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Nurses Section -->
+    <section class="nurses-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Our Dedicated Nursing Team</h2>
+          <div class="title-underline"></div>
+          <p class="section-subtitle">Compassionate care delivered with expertise and heart</p>
+        </div>
+        <div class="nurses-showcase">
+          <div class="nurses-image-container">
+            <div class="nurses-image-wrapper">
+              <div class="nurses-image-placeholder">
+                <img src="Pictures/nurses.jpg" alt="Nursing Team">
+                <div class="image-overlay">
+                  <div class="overlay-content">
+                    <h3>Our Nursing Excellence</h3>
+                    <p>Dedicated professionals committed to your wellbeing</p>
+                  </div>
+                </div>
+              </div>
+              <div class="image-decoration">
+                <div class="decoration-element decoration-1"></div>
+                <div class="decoration-element decoration-2"></div>
+                <div class="decoration-element decoration-3"></div>
+              </div>
+            </div>
+          </div>
+          <div class="nurses-content">
+            <div class="content-card">
+              <div class="card-icon">
+                <i class="fas fa-heart"></i>
+              </div>
+              <h3>Compassionate Care</h3>
+              <p>Our nursing team provides round-the-clock care with empathy, ensuring every patient feels valued and supported throughout their healthcare journey.</p>
+            </div>
+            <div class="content-card">
+              <div class="card-icon">
+                <i class="fas fa-user-check"></i>
+              </div>
+              <h3>Professional Excellence</h3>
+              <p>Highly trained and certified nurses who maintain the highest standards of medical care while treating each patient with dignity and respect.</p>
+            </div>
+            <div class="content-card">
+              <div class="card-icon">
+                <i class="fas fa-clock"></i>
+              </div>
+              <h3>24/7 Availability</h3>
+              <p>Our dedicated nursing staff is available around the clock to ensure continuous, quality care for all patients in every department.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Contact Information</h2>
+          <div class="title-underline"></div>
+        </div>
+        <div class="contact-content">
+          <div class="contact-info">
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="contact-details">
+                <h4>Visit Us</h4>
+                <p>No. 4, Nova Road, Adebayo Area<br>Ado-Ekiti 360101, Ekiti State, Nigeria</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-phone"></i>
+              </div>
+              <div class="contact-details">
+                <h4>Call Us</h4>
+                <p>+234 806 328 9272<br>+234 813 060 6959</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div class="contact-details">
+                <h4>Email Us</h4>
+                <p>dominionspec2@gmail.com<br>bisijacob@yahoo.co.uk</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-clock"></i>
+              </div>
+              <div class="contact-details">
+                <h4>Office Hours</h4>
+                <p><strong>Outpatient consultations:</strong><br>8:00 AM - 8:00 PM daily</p>
+                <p><strong>Emergency services:</strong><br>24 hours</p>
+              </div>
+            </div>
+          </div>
+          <div class="map-container">
+            <div class="map-wrapper">
+              <div class="map-loading" id="mapLoading">
+                <div class="loading-spinner"></div>
+                <p>Loading map...</p>
+              </div>
+              <div class="map-frame">
+                <iframe 
+                  id="hospitalMap"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3954.252441642522!2d5.229602774908334!3d7.655983422236309!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1047e4ad854dbed5%3A0x5dba422ee96577f3!2sAfe%20Babalola%20Civic%20Center!5e0!3m2!1sen!2sng!4v1726440004808!5m2!1sen!2sng" 
+                  width="100%" 
+                  height="100%" 
+                  style="border:0;" 
+                  allowfullscreen="" 
+                  loading="lazy" 
+                  referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+              </div>
+              <div class="map-overlay">
+                <div class="location-card">
+                  <div class="location-header">
+                    <i class="fas fa-hospital-alt"></i>
+                    <h3>Dominion Specialist Medical and Diagnostics Center</h3>
+                  </div>
+                  <p>No. 4, Nova Road, Adebayo Area<br>Ado-Ekiti 360101, Ekiti State</p>
+                  <div class="location-actions">
+                    <a href="https://goo.gl/maps/JQzLgKX9XWZnUHxK7" target="_blank" class="location-btn">
+                      <i class="fas fa-directions"></i> Get Directions
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="map-controls">
+                <button class="control-btn" id="zoomIn" aria-label="Zoom in">
+                  <i class="fas fa-plus"></i>
+                </button>
+                <button class="control-btn" id="zoomOut" aria-label="Zoom out">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <button class="control-btn" id="fullscreen" aria-label="Toggle fullscreen">
+                  <i class="fas fa-expand"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Smart Steps Tutorial</h3>
-                    <p>Your trusted partner in JAMB & UTME preparation. Excellence in education, success in examinations.</p>
-                    <div class="social-links">
-                        <a href="#" class="social-link">📘</a>
-                        <a href="#" class="social-link">📱</a>
-                        <a href="#" class="social-link">📧</a>
-                        <a href="#" class="social-link">📞</a>
-                    </div>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul class="footer-links">
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#courses">Courses</a></li>
-                        <li><a href="#resources">Study Materials</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Our Subjects</h4>
-                    <ul class="footer-links">
-                        <li><a href="#mathematics">Mathematics</a></li>
-                        <li><a href="#english">English Language</a></li>
-                        <li><a href="#physics">Physics</a></li>
-                        <li><a href="#chemistry">Chemistry</a></li>
-                        <li><a href="#biology">Biology</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Contact Info</h4>
-                    <div class="contact-info">
-                        <p>📍 Lagos, Nigeria</p>
-                        <p>📞 +234 XXX XXX XXXX</p>
-                        <p>📧 info@smartstepstutorial.com</p>
-                        <p>🕒 Mon - Sat: 8AM - 8PM</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <div class="footer-bottom-content">
-                    <p>&copy; 2024 Smart Steps Tutorial. All Rights Reserved.</p>
-                    <div class="footer-bottom-links">
-                        <a href="#privacy">Privacy Policy</a>
-                        <a href="#terms">Terms of Service</a>
-                        <a href="#support">Support</a>
-                    </div>
-                </div>
-            </div>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-logo">
+            <img style="height: 75px;" src="Pictures/logo.png" alt="">
+            <span>Dominion Specialist Medical and Diagnostics Center</span>
+          </div>
+          <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="Dominion-Class.html">Resources</a>
+            <a href="contact.html">Contact Us</a>
+          </div>
+          <div style="display: none;" class="footer-social">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+          </div>
         </div>
+        <div class="footer-bottom">
+          <p>© 2025 Dominion Specialist Medical and Diagnostics Center. All Rights Reserved.</p>
+        </div>
+      </div>
     </footer>
 
     <script>
-        // Hamburger Menu Toggle Functionality
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const body = document.body;
-
-        function toggleMobileMenu() {
-            hamburger.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
+      /**
+       * Interactive Map functionality for Dominion Specialist Medical and Diagnostics Center website
+       */
+      document.addEventListener('DOMContentLoaded', function() {
+        // Map elements
+        const mapFrame = document.getElementById('hospitalMap');
+        const mapLoading = document.getElementById('mapLoading');
+        const zoomInBtn = document.getElementById('zoomIn');
+        const zoomOutBtn = document.getElementById('zoomOut');
+        const fullscreenBtn = document.getElementById('fullscreen');
+        const mapContainer = document.querySelector('.map-container');
+        
+        // Current zoom level and position tracking
+        let currentZoom = 16;
+        let isFullscreen = false;
+        
+        // Hide loading screen when map is loaded
+        mapFrame.addEventListener('load', function() {
+          // Add a slight delay to ensure the map is fully rendered
+          setTimeout(() => {
+            mapLoading.style.opacity = '0';
+            setTimeout(() => {
+              mapLoading.style.display = 'none';
+            }, 500);
+          }, 1000);
+        });
+        
+        // Map control functionality
+        
+        // Zoom in functionality
+        zoomInBtn.addEventListener('click', function() {
+          if (currentZoom < 20) {
+            currentZoom++;
+            updateMapZoom();
+          }
+          
+          // Add button press effect
+          this.classList.add('active');
+          setTimeout(() => this.classList.remove('active'), 200);
+        });
+        
+        // Zoom out functionality
+        zoomOutBtn.addEventListener('click', function() {
+          if (currentZoom > 12) {
+            currentZoom--;
+            updateMapZoom();
+          }
+          
+          // Add button press effect
+          this.classList.add('active');
+          setTimeout(() => this.classList.remove('active'), 200);
+        });
+        
+        // Fullscreen toggle
+        fullscreenBtn.addEventListener('click', function() {
+          toggleFullscreen();
+          
+          // Add button press effect
+          this.classList.add('active');
+          setTimeout(() => this.classList.remove('active'), 200);
+        });
+        
+        // Update map URL with new zoom level
+        function updateMapZoom() {
+          // Get current iframe src
+          let src = mapFrame.src;
+          
+          // Check if we need to add or update the zoom parameter
+          if (src.includes('&z=')) {
+            // Update existing zoom parameter
+            src = src.replace(/&z=\d+/, `&z=${currentZoom}`);
+          } else {
+            // Add zoom parameter
+            src += `&z=${currentZoom}`;
+          }
+          
+          // Update iframe src
+          mapFrame.src = src;
+          
+          // Show loading indicator briefly
+          mapLoading.style.display = 'flex';
+          mapLoading.style.opacity = '1';
+        }
+        
+        // Toggle fullscreen mode
+        function toggleFullscreen() {
+          isFullscreen = !isFullscreen;
+          
+          if (isFullscreen) {
+            // Store original dimensions
+            mapContainer.dataset.originalHeight = mapContainer.style.height || '';
+            mapContainer.dataset.originalPosition = mapContainer.style.position || '';
             
-            // Prevent body scroll when menu is open
-            if (mobileMenu.classList.contains('active')) {
-                body.style.overflow = 'hidden';
-            } else {
-                body.style.overflow = 'auto';
+            // Apply fullscreen styles
+            mapContainer.style.position = 'fixed';
+            mapContainer.style.top = '0';
+            mapContainer.style.left = '0';
+            mapContainer.style.width = '100%';
+            mapContainer.style.height = '100%';
+            mapContainer.style.zIndex = '9999';
+            mapContainer.style.borderRadius = '0';
+            
+            // Update button icon
+            fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
+            
+            // Prevent body scrolling
+            document.body.style.overflow = 'hidden';
+          } else {
+            // Restore original dimensions
+            mapContainer.style.position = mapContainer.dataset.originalPosition;
+            mapContainer.style.height = mapContainer.dataset.originalHeight;
+            mapContainer.style.top = '';
+            mapContainer.style.left = '';
+            mapContainer.style.width = '';
+            mapContainer.style.zIndex = '';
+            mapContainer.style.borderRadius = '';
+            
+            // Update button icon
+            fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+            
+            // Re-enable body scrolling
+            document.body.style.overflow = '';
+          }
+        }
+        
+        // Add keyboard controls for accessibility
+        document.addEventListener('keydown', function(e) {
+          // Only handle keypresses when map is in focus
+          if (document.activeElement === mapFrame || isFullscreen) {
+            if (e.key === '+' || e.key === '=') {
+              // Zoom in
+              zoomInBtn.click();
+            } else if (e.key === '-' || e.key === '_') {
+              // Zoom out
+              zoomOutBtn.click();
+            } else if (e.key === 'f' || e.key === 'F') {
+              // Toggle fullscreen
+              fullscreenBtn.click();
+            } else if (e.key === 'Escape' && isFullscreen) {
+              // Exit fullscreen
+              toggleFullscreen();
             }
+          }
+        });
+        
+        // Handle responsiveness for the location card
+        const locationCard = document.querySelector('.location-card');
+        
+        function adjustLocationCard() {
+          // Get map container dimensions
+          const containerWidth = mapContainer.offsetWidth;
+          
+          // On small screens, position the card at bottom center
+          if (containerWidth < 500) {
+            locationCard.style.bottom = '10px';
+            locationCard.style.left = '50%';
+            locationCard.style.transform = 'translateX(-50%)';
+          } else {
+            // Reset to original position
+            locationCard.style.bottom = '';
+            locationCard.style.left = '';
+            locationCard.style.transform = '';
+          }
+        }
+        
+        // Adjust on load and resize
+        window.addEventListener('resize', adjustLocationCard);
+        adjustLocationCard();
+        
+        // Add CSS styles for active button state
+        const style = document.createElement('style');
+        style.textContent = `
+          .control-btn.active {
+            transform: scale(0.9);
+            background: var(--primary-color);
+            color: white;
+          }
+          
+          .map-container.hover-effect:hover iframe {
+            transform: scale(1.02);
+            filter: contrast(1.1) saturate(1.2);
+          }
+        `;
+        document.head.appendChild(style);
+        
+        // Add hover effect to map container
+        mapContainer.classList.add('hover-effect');
+      });
+
+      // Mobile Menu Toggle
+      document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.getElementById('menuToggle');
+        const navContainer = document.getElementById('navContainer');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const body = document.body;
+        const dropdownToggle = document.querySelector('.dropdown-toggle');
+        const dropdown = document.querySelector('.dropdown');
+
+        function toggleMenu() {
+          menuToggle.classList.toggle('active');
+          navContainer.classList.toggle('active');
+          dropdown.classList.remove('active');
+          menuOverlay.classList.toggle('active');
+          body.classList.toggle('menu-open');
         }
 
-        // Toggle menu on hamburger click
-        hamburger.addEventListener('click', toggleMobileMenu);
+        // Toggle menu on button click
+        menuToggle.addEventListener('click', toggleMenu);
 
-        // Close menu when clicking on mobile menu links
-        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-links a');
-        mobileMenuLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                mobileMenu.classList.remove('active');
-                body.style.overflow = 'auto';
-            });
-        });
+        // Close menu when clicking overlay
+        menuOverlay.addEventListener('click', toggleMenu);
 
-        // Close menu when clicking outside of it (on the left side)
-        document.addEventListener('click', (e) => {
-            if (mobileMenu.classList.contains('active') && 
-                !mobileMenu.contains(e.target) && 
-                !hamburger.contains(e.target)) {
-                hamburger.classList.remove('active');
-                mobileMenu.classList.remove('active');
-                body.style.overflow = 'auto';
+        // Close menu when clicking nav links
+        document.querySelectorAll('.nav-links a').forEach(link => {
+          link.addEventListener('click', () => {
+            if (navContainer.classList.contains('active')) {
+              toggleMenu();
             }
+          });
         });
 
-        // Close menu on escape key press
+        // Toggle dropdown on mobile
+        dropdownToggle.addEventListener('click', function(e) {
+          if (window.innerWidth <= 768) {
+            e.preventDefault();
+            dropdown.classList.toggle('active');
+          }
+        });
+
+        // Close menu on escape key
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
-                hamburger.classList.remove('active');
-                mobileMenu.classList.remove('active');
-                body.style.overflow = 'auto';
-            }
+          if (e.key === 'Escape' && navContainer.classList.contains('active')) {
+            toggleMenu();
+          }
         });
 
-        // Smooth scrolling for navigation links
+        // Prevent scrolling when menu is open
+        document.addEventListener('touchmove', function(e) {
+          if (body.classList.contains('menu-open')) {
+            if (!e.target.closest('.nav-container')) {
+              e.preventDefault();
+            }
+          }
+        }, { passive: false });
+
+        // Book Appointment Function
+        window.bookAppointment = function() {
+          location.href = './book_appointment.html';
+        };
+
+        // Smooth Scroll for Internal Links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
+          anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+              target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+              });
+            }
+          });
         });
 
-        // Navbar background on scroll
+        // Dynamic Header Background
         window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 100) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+          const header = document.querySelector('.header');
+          if (window.scrollY > 100) {
+            header.style.background = 'linear-gradient(to right, rgba(44, 62, 80, 0.95), rgba(26, 42, 58, 0.95))';
+            header.style.backdropFilter = 'blur(10px)';
+          } else {
+            header.style.background = 'linear-gradient(to right, var(--primary-color), #1a2a3a)';
+            header.style.backdropFilter = 'none';
+          }
         });
+      });
     </script>
-    
-    <!-- Font Awesome CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-
-    <script>
-        // Replace emoji icons in footer with Font Awesome icons
-        document.addEventListener('DOMContentLoaded', function () {
-            // Social links
-            const socialLinks = document.querySelector('.social-links');
-            if (socialLinks) {
-                socialLinks.innerHTML = `
-                    <a href="#" class="social-link" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social-link" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#" class="social-link" title="Email"><i class="fas fa-envelope"></i></a>
-                    <a href="#" class="social-link" title="Phone"><i class="fas fa-phone"></i></a>
-                `;
-            }
-
-            // Contact info
-            const contactInfo = document.querySelector('.contact-info');
-            if (contactInfo) {
-                contactInfo.innerHTML = `
-                    <p><i class="fas fa-map-marker-alt"></i> Lagos, Nigeria</p>
-                    <p><i class="fas fa-phone"></i> +234 XXX XXX XXXX</p>
-                    <p><i class="fas fa-envelope"></i> info@smartstepstutorial.com</p>
-                    <p><i class="fas fa-clock"></i> Mon - Sat: 8AM - 8PM</p>
-                `;
-            }
-        });
-    </script>
-</body>
+  </body>
 </html>
+<style>
+
+    @media (min-width: 1025px) {
+  .dropdown-toggle {
+    position: relative;
+    top: -7px;
+
+
+  }
+}
+
+</style>
